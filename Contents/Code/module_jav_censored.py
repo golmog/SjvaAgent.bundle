@@ -29,6 +29,9 @@ class ModuleJavCensoredBase(AgentBase):
                     # from_scanner
                     ret = media.name
             ret = ret.replace(' ', '-').replace('JAVALL|', '')
+            if getattr(self, 'module_name', '') != 'western':
+                ret = ret.replace(' ', '-')
+
             return ret
         except Exception as e:
             Log.Exception(str(e))
@@ -55,11 +58,13 @@ class ModuleJavCensoredBase(AgentBase):
 
         for item in data:
             #title = '[%s]%s' % (item['ui_code'], String.DecodeHTMLEntities(String.StripTags(item['title_ko'])).strip())
-            if item['year'] != '' and item['year'] is not None:
-                title = '{} / {} / {}'.format(item['ui_code'], item['year'], item['site'])
+            display_name = item.get('title') if getattr(self, 'module_name', '') == 'western' else item.get('ui_code')
+
+            if item.get('year') != '' and item.get('year') is not None:
+                title = '{} / {} / {}'.format(display_name, item.get('year'), item.get('site', 'tpdb'))
                 year = item['year']
             else:
-                title = '{} / {}'.format(item['ui_code'], item['site'])
+                title = '{} / {}'.format(display_name, item.get('site', 'tpdb'))
                 year = ''
             meta = MetadataSearchResult(id=item['code'], name=title, year=year, score=item['score'], thumb=item['image_url'], lang=lang)
             meta.summary = self.change_html(item['title_ko'])
