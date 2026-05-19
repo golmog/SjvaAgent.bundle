@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-class SjvaAgentJavFc2(Agent.Movies):
-    name = 'SJVA Jav FC2 (dummy)'
+class SjvaAgentWestern(Agent.Movies):
+    name = 'SJVA Western (dummy)'
     
     fallback_agent = 'com.plexapp.agents.sjva_agent'
     languages = [Locale.Language.Korean]

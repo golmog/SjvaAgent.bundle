@@ -35,7 +35,7 @@ class ModuleJavCensoredBase(AgentBase):
 
 
     def base_search(self, results, media, lang, manual, keyword):
-        if manual and media.name is not None and media.name.startswith(('CD', 'CB', 'DT')):
+        if manual and media.name is not None and media.name.startswith(('CD', 'CB', 'CT', 'CJ')):
             code = media.name
             meta = MetadataSearchResult(id=code, name=code, year=1900, score=100, thumb="", lang=lang)
             results.Append(meta)
@@ -172,17 +172,13 @@ class ModuleJavCensoredBase(AgentBase):
 
 
 
-class ModuleJavCensoredDvd(ModuleJavCensoredBase):
+class ModuleJavCensored(ModuleJavCensoredBase):
     module_name = 'jav_censored'
-
-
-class ModuleJavCensoredAma(ModuleJavCensoredBase):
-    module_name = 'jav_censored_ama'
-
-
-class ModuleJavFc2(ModuleJavCensoredBase):
-    module_name = 'jav_fc2'
 
 
 class ModuleJavUnCensored(ModuleJavCensoredBase):
     module_name = 'jav_uncensored'
+
+
+class ModuleWestern(ModuleJavCensoredBase):
+    module_name = 'western'
