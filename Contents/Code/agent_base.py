@@ -36,10 +36,10 @@ def d(data):
 class AgentBase(object):
     key_map = {
         'com.plexapp.agents.sjva_agent_jav_censored' : 'C',         # C : censored dvd
-        'com.plexapp.agents.sjva_agent_jav_censored_ama' : 'D',     # D : censored ama
         'com.plexapp.agents.sjva_agent_jav_uncensored' : 'E',       # E : uncensored
-        # W : western
-        'com.plexapp.agents.sjva_agent_jav_fc2' : 'L',              # L : fc2
+        'com.plexapp.agents.sjva_agent_western' : 'W',              # W : western
+        #'com.plexapp.agents.sjva_agent_jav_censored_ama' : 'D',     # D : censored ama
+        #'com.plexapp.agents.sjva_agent_jav_fc2' : 'L',              # L : fc2
         'com.plexapp.agents.sjva_agent_ktv' : 'K',                  # K : 국내TV
         'com.plexapp.agents.sjva_agent_ftv' : 'F',                  # F : 외국TV
         # F : FTV
@@ -277,7 +277,7 @@ class AgentBase(object):
                 filename = data['MediaContainer']['Metadata'][0]['Media'][0]['Part'][0]['file']
                 if self.module_name in ['movie']:
                     ret = os.path.join(os.path.dirname(filename), 'info.json')
-                elif self.module_name in ['jav_censored', 'jav_censored_ama', 'jav_fc2', 'jav_uncensored']:
+                elif self.module_name in ['jav_censored', 'jav_uncensored']:
                     section_id_list = []
                     if Prefs['filename_json'] is not None:
                         section_id_list = Prefs['filename_json'].split(',')
@@ -287,6 +287,15 @@ class AgentBase(object):
                         if code[-2] == 'd' and code [-3] == 'c':
                             code = code[:-3].strip(' .-')
                         ret = os.path.join(os.path.dirname(filename), '%s.json' % code)
+                    else:
+                        ret = os.path.join(os.path.dirname(filename), 'info.json')
+                elif self.module_name == 'western':
+                    section_id_list = []
+                    if Prefs['filename_json'] is not None:
+                        section_id_list = Prefs['filename_json'].split(',')
+                    if Prefs['filename_json'] == 'all' or section_id in section_id_list:
+                        file_base = os.path.splitext(os.path.basename(filename))[0]
+                        ret = os.path.join(os.path.dirname(filename), '%s.json' % file_base)
                     else:
                         ret = os.path.join(os.path.dirname(filename), 'info.json')
                 elif self.module_name in ['book']:

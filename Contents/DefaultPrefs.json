@@ -43,7 +43,7 @@
 	},
 	{
 		"id": "jav_dvd_search_all",
-		"label": "JAV DVD로 통합 사용. (검색 실패시 AMA, FC2 순으로 시도)",
+		"label": "JAV Censored로 통합 사용. (검색 실패시 Uncensored, Western 순으로 시도)",
 		"type": "bool",
 		"option": "True",
 		"default": "True"
