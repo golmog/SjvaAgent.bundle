@@ -92,7 +92,13 @@ class ModuleJavCensoredBase(AgentBase):
         if 'title' in data and data['title'] is not None:
             metadata.title = self.change_html(data['title'])
         if 'originaltitle' in data and data['originaltitle'] is not None:
-            metadata.original_title = metadata.title_sort = data['originaltitle']
+            metadata.original_title = data['originaltitle']
+
+        if 'sorttitle' in data and data['sorttitle'] is not None:
+            metadata.title_sort = data['sorttitle']
+        elif 'originaltitle' in data and data['originaltitle'] is not None:
+            metadata.title_sort = data['originaltitle']
+
         try: metadata.year = data['year']
         except Exception: pass
         try: metadata.duration = data['runtime']*60
